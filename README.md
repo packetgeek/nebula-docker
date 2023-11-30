@@ -1,2 +1,35 @@
 # nebula-docker
-Dockerized version of Nebula, from https://exploit.education
+
+This is basically a Dockerized version of [Exploit.Education's](https://exploit.education) Nebula VM (basically, qemu inside of Docker, running the Nebula image).  I put this together for a friend and others have expressed interest, so here it is.
+
+## To build
+
+1) Visit https://exploit.education and download the exploit-exercises-nebula.iso file.
+
+2) Place the above file in the same folder as the Dockerfile
+
+3) Run "./build-image" to build the Docker image
+
+4) Run "./build" to deploy a container from the image
+
+5) Read the instructions for connecting to the various challenges.  Connect to the VM by using ssh to connect to port 2223 on your Docker host (localhost should work also).  
+
+## Notes
+
+In no particular order: 
+
+* "build", "build-image", "connect-to-container", and "connect-to-vm" are Bash scripts for the user to run.  If you're new to Docker (or just paranoid), recommend looking at the contents of these scripts.
+* "start-up.sh" is used in automatically starting Qemu inside of the container (don't run it manually).
+* "notes.md" is the Markdown text that I used to generate the PDF (via Pandoc).
+* The notes(.md|.pdf) file contains additional steps if you want to export the image to a tarball and import on a different machine.  This is useful when the target machine is air-gapped.
+* This is a quick-kluge to run the VM.  There's probably cleaner ways to do this but for an hour's work, it's usable.
+* If you've already built the Phoenix image on your Docker host, building the Nebula container shouldn't take long (it uses many of the same layers). 
+* Once the build-image script finishes, you should have a Docker image roughly 1.5 GB in size.
+* I intentionally left out persistent storage (in the "build" script).  This is because completing (at least some of) the challenges modifies the challenge's binary.  If you want to reset everything, delete the container and run "./build" again.
+* Since this is just a quick-and-dirty jury rig, please don't expect rapid support for any problem that you experience.  You can ask but, given that work involves travel, I may not notice your query for a month or more.  You might also try the TC4 meetings on Fridays (1st Friday of the month is in-person, others are on the TCC Cybersecurity Club Discord server (6-9 PM, Eastern).  Ask  if you need an invite.
+* Once the container is running, the virtual machine also has to start.  If there's no response to SSH, it's still starting.  If SSH complains about a key, it's almost-started.  Give it another minute.
+* ***Important*** Your credentials will vary for each challenge.  Be sure to read the instructions from the [site](https://exploit.education).  Example: for the Level00 challenge, they are: level00/level00.
+    
+## Solutions for the Challenges
+
+I've not yet found a comprehensive set of solutions.  That's not to say that they don't exist.  Various people have posted solutions in piecemeal fashion.  Google is your friend in this case.
